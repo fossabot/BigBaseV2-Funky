@@ -67,7 +67,7 @@ namespace big
 		{
 			m_swapchain = ptr.add(3).rip().as<IDXGISwapChain**>();
 		});
-
+		
 		main_batch.run(memory::module(nullptr));
 		*/
 

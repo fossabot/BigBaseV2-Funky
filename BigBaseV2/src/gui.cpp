@@ -143,14 +143,14 @@ namespace big
 				if (ImGui::Button("Run Script"))
 				{
 					g_JavascriptTest->BeginContext();
-					//g_JavascriptTest->CopyInput(input);
-					//g_JavascriptTest->RunScript();
+					g_JavascriptTest->CopyInput(input);
+					g_JavascriptTest->RunScript();
 
-					////strcpy_s(output, g_JavascriptTest->GetOutput());
-					//memset(output, 0, sizeof(output));
-					//memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
+					//strcpy_s(output, g_JavascriptTest->GetOutput());
+					memset(output, 0, sizeof(output));
+					memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
 
-					//g_JavascriptTest->EndContext();
+					g_JavascriptTest->EndContext();
 				}
 
 				ImGui::EndTabItem();

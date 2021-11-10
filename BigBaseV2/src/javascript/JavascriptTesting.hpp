@@ -6,9 +6,13 @@ namespace big
 {
 	struct JavaScript_ChakraRuntime
 	{
-		unsigned currentSourceContext = 0;
+		js_State* js_state;
+		char *jsResult =  0;
+	};
 
-		char *jsResult =  0 ;
+	struct JavaScript_Functions
+	{
+		static void Logging(js_State* state);
 	};
 
 	class JavaScriptTesting

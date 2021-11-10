@@ -4,11 +4,7 @@
 
 namespace big
 {
-	struct JavaScript_ChakraRuntime
-	{
-		js_State* js_state;
-		char *jsResult =  0;
-	};
+
 
 	struct JavaScript_Functions
 	{
@@ -18,14 +14,14 @@ namespace big
 	class JavaScriptTesting
 	{
 	private:
-		JavaScript_ChakraRuntime chakra;
-
+		js_State* js_state;
+		char* jsResult = 0;
 	public:
 		void BeginContext();
 		void CopyInput(char* _input);
 		void RunScript();
 		size_t GetOutputSize() { return 128; }
-		char* GetOutput() { return chakra.jsResult; }
+		char* GetOutput() { return jsResult; }
 
 		void EndContext();
 

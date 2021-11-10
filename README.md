@@ -18,7 +18,7 @@ To build BigBaseV2 you need:
 
 To set up the build environment, run the following commands in a terminal:
 ```dos
-git clone https://github.com/Pocakking/BigBaseV2.git --recurse-submodules
+git clone https://github.com/PatchByte/BigBaseV2-Funky.git --recurse-submodules
 cd BigBaseV2
 premake5 vs2019
 ```

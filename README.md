@@ -26,15 +26,31 @@ Now, you will be able to open the solution, and simply build it in Visual Studio
 
 
 
-# How to build Chakra Core?
-Build Steps -> `https://github.com/chakra-core/ChakraCore/wiki/Embedding-ChakraCore`
+# Getting a error at mujs?
 
-Put the Includes to -> `BigBaseV2-Funky/BigBaseV2/src/ChakraIncludes`
-
-Put the ChakraCore.dll into you'r GTAV Folder!
-
-Put the ChakraCore.lib into `BigBaseV2-Funky/BigBaseV2/src/ChakraIncludes`
-
+```c
+static int js_ptry(js_State *J) {
+	if (J->trytop == JS_TRYLIMIT) {
+		STACK[TOP].type = JS_TLITSTR;
+		STACK[TOP].u.litstr = "exception stack overflow";
+		TOP;
+		return 1;
+	}
+	return 0;
+}
+```
+change it to
+```c
+static int js_ptry(js_State *J) {
+	if (J->trytop == JS_TRYLIMIT) {
+		J->stack[J->top].type = JS_TLITSTR;
+		J->stack[J->top].u.litstr = "exception stack overflow";
+		++J->top;
+		return 1;
+	}
+	return 0;
+}
+```
 
 
 # What now?

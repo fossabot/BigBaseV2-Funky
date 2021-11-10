@@ -21,3 +21,6 @@
 [submodule "vendor/ChakraCore"]
 	path = vendor/ChakraCore
 	url = https://github.com/chakra-core/ChakraCore.git
+[submodule "vendor/mujs"]
+	path = vendor/mujs
+	url = https://github.com/ccxvii/mujs.git

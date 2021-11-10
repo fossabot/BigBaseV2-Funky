@@ -1,15 +1,11 @@
 #pragma once
 #include "../common.hpp"
-#include "../ChakraIncludes/ChakraCommon.h"
-#include "../ChakraIncludes/ChakraCore.h"
+#include <mujs.h>
 
 namespace big
 {
 	struct JavaScript_ChakraRuntime
 	{
-		JsRuntimeHandle runtime;
-		JsContextRef context;
-		JsValueRef result;
 		unsigned currentSourceContext = 0;
 
 		char *jsResult =  0 ;

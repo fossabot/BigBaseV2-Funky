@@ -6,12 +6,6 @@ void big::JavaScriptTesting::BeginContext()
 {
 	this->chakra.jsResult = (char*)calloc(1, this->GetOutputSize());
 
-	JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &chakra.runtime);
-
-	JsCreateContext(chakra.runtime, &chakra.context);
-
-	JsSetCurrentContext(chakra.context);
-
 	g_Logger->Info("Allocated JavaScript Runtime");
 }
 
@@ -30,21 +24,7 @@ void big::JavaScriptTesting::CopyInput(char* _input)
 
 void big::JavaScriptTesting::RunScript()
 {
-	JsRunScript(this->input, chakra.currentSourceContext++, L"", &chakra.result);
-
-	JsValueRef resultJSString;
-	JsConvertValueToString(chakra.result, &resultJSString);
-
-	const wchar_t* resultWC;
-	size_t stringLength;
-	JsStringToPointer(resultJSString, &resultWC, &stringLength);
-
-	// its a bit unsafe ik ik
-	wcstombs(this->chakra.jsResult, resultWC, stringLength);
-	this->chakra.jsResult[stringLength] = 0;
-
-	JsRelease(resultJSString, NULL);
-	JsRelease(chakra.result, NULL);
+	
 }
 
 void big::JavaScriptTesting::EndContext()
@@ -52,6 +32,5 @@ void big::JavaScriptTesting::EndContext()
 	free(this->input);
 	free(this->chakra.jsResult);
 
-	JsSetCurrentContext(JS_INVALID_REFERENCE);
-	JsDisposeRuntime(chakra.runtime);
+	
 }

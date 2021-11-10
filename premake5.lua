@@ -12,12 +12,11 @@ workspace "BigBaseV2"
   outputdir = "%{cfg.buildcfg}"
 
   IncludeDir = {}
-  IncludeDir["fmtlib"] = "vendor/fmtlib/include"
   IncludeDir["json"] = "vendor/json/single_include"
   IncludeDir["MinHook"] = "vendor/MinHook/include"
   IncludeDir["ImGui"] = "vendor/ImGui"
   IncludeDir["ImGuiImpl"] = "vendor/ImGui/examples"
-  IncludeDir["StackWalker"] = "vendor/StackWalker/Main/StackWalker/"
+  IncludeDir["mujs"] = "vendor/mujs"
   
   CppVersion = "C++17"
   MsvcToolset = "v142"
@@ -80,49 +79,6 @@ workspace "BigBaseV2"
     DeclareMSVCOptions()
     DeclareDebugOptions()
 
-  project "fmtlib"
-    location "vendor/%{prj.name}"
-    kind "StaticLib"
-    language "C++"
-
-    targetdir ("bin/lib/" .. outputdir)
-    objdir ("bin/lib/int/" .. outputdir .. "/%{prj.name}")
-
-    files
-    {
-      "vendor/%{prj.name}/include/**.h",
-      "vendor/%{prj.name}/src/**.cc"
-    }
-
-    includedirs
-    {
-      "vendor/%{prj.name}/include"
-    }
-
-    DeclareMSVCOptions()
-    DeclareDebugOptions()
-
-  project "StackWalker"
-    location "vendor/%{prj.name}"
-    kind "StaticLib"
-    language "C++"
-  
-    targetdir ("bin/lib/" .. outputdir)
-    objdir ("bin/lib/int/" .. outputdir .. "/%{prj.name}")
-
-    files
-    {
-      "vendor/%{prj.name}/Main/StackWalker/StackWalker.cpp"
-    }
-
-    includedirs
-    {
-      "vendor/%{prj.name}/include"
-    }
-
-    DeclareMSVCOptions()
-    DeclareDebugOptions()
-
   project "MinHook"
     location "vendor/%{prj.name}"
     kind "StaticLib"
@@ -136,6 +92,23 @@ workspace "BigBaseV2"
       "vendor/%{prj.name}/include/**.h",
       "vendor/%{prj.name}/src/**.h",
       "vendor/%{prj.name}/src/**.c"
+    }
+
+    DeclareMSVCOptions()
+    DeclareDebugOptions()
+	
+  project "mujs"
+    location "vendor/%{prj.name}"
+    kind "StaticLib"
+    language "C++"
+
+    targetdir ("bin/lib/" .. outputdir)
+    objdir ("bin/lib/int/" .. outputdir .. "/%{prj.name}")
+
+    files
+    {
+      "vendor/%{prj.name}/**.h",
+      "vendor/%{prj.name}/**.c"
     }
 
     DeclareMSVCOptions()
@@ -161,12 +134,11 @@ workspace "BigBaseV2"
 
     includedirs
     {
-      "%{IncludeDir.fmtlib}",
       "%{IncludeDir.json}",
       "%{IncludeDir.MinHook}",
       "%{IncludeDir.ImGui}",
       "%{IncludeDir.ImGuiImpl}",
-      "%{IncludeDir.StackWalker}",
+      "%{IncludeDir.mujs}",
       "%{prj.name}/src"
     }
 
@@ -177,10 +149,8 @@ workspace "BigBaseV2"
 
     links
     {
-      "fmtlib",
       "MinHook",
-      "ImGui",
-      "StackWalker"
+      "ImGui"
     }
 
     pchheader "%{PrecompiledHeaderInclude}"

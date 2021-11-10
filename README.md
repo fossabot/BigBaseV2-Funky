@@ -1,4 +1,4 @@
-# BigBaseV2
+# BigBaseV2 but funky
 A mod menu base for Grand Theft Auto V.
 Strictly for educational purposes.
 

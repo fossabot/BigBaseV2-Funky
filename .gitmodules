@@ -18,3 +18,6 @@
 	path = vendor/StackWalker
 	url = https://github.com/JochenKalmbach/StackWalker
 	ignore = dirty
+[submodule "vendor/ChakraCore"]
+	path = vendor/ChakraCore
+	url = https://github.com/chakra-core/ChakraCore.git

@@ -7,6 +7,7 @@
 #include "pointers.hpp"
 #include "renderer.hpp"
 #include "script_mgr.hpp"
+#include "javascript/JavascriptTesting.hpp"
 
 BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 {
@@ -24,6 +25,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			g_Logger = std::make_unique<big::log>();
 			g_Logger->initialize();
+
+			g_JavascriptTest = std::make_unique<big::JavaScriptTesting>();
 			//LOG_INFO("Hello there!");
 				
 			auto pointers_instance = std::make_unique<pointers>();
@@ -76,6 +79,8 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 
 			pointers_instance.reset();
 			//LOG_INFO("Pointers uninitialized.");
+
+			g_JavascriptTest.reset();
 
 			//LOG_INFO("Farewell!");
 			g_Logger->shutdown();

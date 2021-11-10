@@ -8,6 +8,7 @@
 #include "pointers.hpp"
 #include "renderer.hpp"
 #include "script.hpp"
+#include "javascript/JavascriptTesting.hpp"
 
 #include <imgui.h>
 
@@ -127,6 +128,28 @@ namespace big
 							STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(hash);
 						});
 				}
+				ImGui::EndTabItem();
+			}
+
+			if (ImGui::BeginTabItem("JS"))
+			{
+				static char input[1024] = { 0 };
+				static char output[1024] = { 0 };
+
+
+				ImGui::InputTextMultiline("##output_js", output, sizeof(output), ImVec2(-1, 250), ImGuiInputTextFlags_ReadOnly);
+				ImGui::InputTextMultiline("##input_js", input, sizeof(input), ImVec2(-1, 250));
+				if (ImGui::Button("Run Script"))
+				{
+					g_JavascriptTest->BeginContext();
+					g_JavascriptTest->CopyInput(input);
+					g_JavascriptTest->RunScript();
+
+					strcpy_s(output, g_JavascriptTest->GetOutput());
+
+					g_JavascriptTest->EndContext();
+				}
+
 				ImGui::EndTabItem();
 			}
 

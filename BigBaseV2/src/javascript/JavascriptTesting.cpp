@@ -4,7 +4,7 @@
 
 void big::JavaScriptTesting::BeginContext()
 {
-	memset(this->chakra.jsResult, 0, sizeof(this->chakra.jsResult));
+	this->chakra.jsResult = (char*)calloc(1, this->GetOutputSize());
 
 	JsCreateRuntime(JsRuntimeAttributeNone, nullptr, &chakra.runtime);
 
@@ -23,7 +23,7 @@ void big::JavaScriptTesting::CopyInput(char* _input)
 	size_t strLen = strlen(_input);
 
 	this->input = (wchar_t*)malloc((strLen + 1) * sizeof(wchar_t));
-	memset(this->input, 0, (strLen + 1) * sizeof(wchar_t));
+	memset(this->input, 0, (strLen + 2) * sizeof(wchar_t));
 
 	mbstowcs(this->input, _input, strLen + 1);
 }
@@ -41,13 +41,16 @@ void big::JavaScriptTesting::RunScript()
 
 	// its a bit unsafe ik ik
 	wcstombs(this->chakra.jsResult, resultWC, stringLength);
+	this->chakra.jsResult[stringLength] = 0;
 
-	
+	JsRelease(resultJSString, NULL);
+	JsRelease(chakra.result, NULL);
 }
 
 void big::JavaScriptTesting::EndContext()
 {
 	free(this->input);
+	free(this->chakra.jsResult);
 
 	JsSetCurrentContext(JS_INVALID_REFERENCE);
 	JsDisposeRuntime(chakra.runtime);

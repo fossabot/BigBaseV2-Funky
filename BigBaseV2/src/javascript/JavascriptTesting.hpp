@@ -12,7 +12,7 @@ namespace big
 		JsValueRef result;
 		unsigned currentSourceContext = 0;
 
-		char jsResult[1024] = { 0 };
+		char *jsResult =  0 ;
 	};
 
 	class JavaScriptTesting
@@ -24,6 +24,7 @@ namespace big
 		void BeginContext();
 		void CopyInput(char* _input);
 		void RunScript();
+		size_t GetOutputSize() { return 128; }
 		char* GetOutput() { return chakra.jsResult; }
 
 		void EndContext();

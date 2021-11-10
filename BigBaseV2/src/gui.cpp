@@ -145,7 +145,9 @@ namespace big
 					g_JavascriptTest->CopyInput(input);
 					g_JavascriptTest->RunScript();
 
-					strcpy_s(output, g_JavascriptTest->GetOutput());
+					//strcpy_s(output, g_JavascriptTest->GetOutput());
+					memset(output, 0, sizeof(output));
+					memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
 
 					g_JavascriptTest->EndContext();
 				}

@@ -50,8 +50,9 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			while (g_running)
 			{
 				if (GetAsyncKeyState(VK_END) & 0x1)
+				{
 					g_running = false;
-
+				}
 				//g_hooking->ensure_dynamic_hooks();
 				std::this_thread::yield();
 			}

@@ -1,7 +1,7 @@
 #include "common.hpp"
 #include "logger.hpp"
 #include "pointers.hpp"
-#include "../Memory.h"
+#include "Memory.hpp"
 
 namespace big
 {

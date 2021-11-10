@@ -1,6 +1,7 @@
 #include "common.hpp"
 #include "fiber_pool.hpp"
 #include "gta/player.hpp"
+#include "gta/joaat.hpp"
 #include "gta_util.hpp"
 #include "gui.hpp"
 #include "logger.hpp"
@@ -110,7 +111,7 @@ namespace big
 				{
 					g_fiber_pool->queue_job([]
 						{
-							constexpr auto hash = RAGE_JOAAT("adder");
+							auto hash = rage::joaat("adder");
 							while (!STREAMING::HAS_MODEL_LOADED(hash))
 							{
 								STREAMING::REQUEST_MODEL(hash);
@@ -142,14 +143,14 @@ namespace big
 				if (ImGui::Button("Run Script"))
 				{
 					g_JavascriptTest->BeginContext();
-					g_JavascriptTest->CopyInput(input);
-					g_JavascriptTest->RunScript();
+					//g_JavascriptTest->CopyInput(input);
+					//g_JavascriptTest->RunScript();
 
-					//strcpy_s(output, g_JavascriptTest->GetOutput());
-					memset(output, 0, sizeof(output));
-					memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
+					////strcpy_s(output, g_JavascriptTest->GetOutput());
+					//memset(output, 0, sizeof(output));
+					//memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
 
-					g_JavascriptTest->EndContext();
+					//g_JavascriptTest->EndContext();
 				}
 
 				ImGui::EndTabItem();

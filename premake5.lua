@@ -15,7 +15,7 @@ workspace "BigBaseV2"
   IncludeDir["json"] = "vendor/json/single_include"
   IncludeDir["MinHook"] = "vendor/MinHook/include"
   IncludeDir["ImGui"] = "vendor/ImGui"
-  IncludeDir["ImGuiImpl"] = "vendor/ImGui/examples"
+  IncludeDir["ImGuiImpl"] = "vendor/ImGui/backends"
   IncludeDir["mujs"] = "vendor/mujs"
   
   CppVersion = "C++17"
@@ -64,11 +64,16 @@ workspace "BigBaseV2"
     files
     {
       "vendor/%{prj.name}/imgui.cpp",
-      "vendor/%{prj.name}/imgui_demo.cpp",
+      "vendor/%{prj.name}/imgui.h",
       "vendor/%{prj.name}/imgui_draw.cpp",
+      "vendor/%{prj.name}/imgui_internal.h",
+      "vendor/%{prj.name}/imgui_tables.cpp",
       "vendor/%{prj.name}/imgui_widgets.cpp",
-      "vendor/%{prj.name}/examples/imgui_impl_dx11.cpp",
-      "vendor/%{prj.name}/examples/imgui_impl_win32.cpp"
+      "vendor/%{prj.name}/imstb_rectpack.h",
+      "vendor/%{prj.name}/imstb_textedit.h",
+      "vendor/%{prj.name}/imstb_truetype.h",
+      "vendor/%{prj.name}/backends/imgui_impl_dx11.cpp",
+      "vendor/%{prj.name}/backends/imgui_impl_win32.cpp"
     }
 
     includedirs

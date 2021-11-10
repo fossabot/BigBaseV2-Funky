@@ -7,8 +7,8 @@ void big::JavaScriptTesting::BeginContext()
 	this->jsResult = (char*)calloc(1, this->GetOutputSize());
 	this->js_state = js_newstate(NULL, NULL, JS_STRICT);
 
-	/*js_newcfunction(this->js_state, JavaScript_Functions::Logging, "logger.info", 1);
-	js_setglobal(this->js_state, "hello");*/
+	js_newcfunction(this->js_state, JavaScript_Functions::Logging, "log_info", 1);
+	js_setglobal(this->js_state, "log_info");
 
 	g_Logger->Info("Allocated JavaScript Runtime");
 }

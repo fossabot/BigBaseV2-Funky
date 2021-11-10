@@ -12,7 +12,7 @@ namespace big
 		m_detour(detour)
 	{
 		MH_CreateHook(m_target, m_detour, &m_original);
-		MH_EnableHook(m_target);
+		
 	}
 
 	detour_hook::~detour_hook() noexcept

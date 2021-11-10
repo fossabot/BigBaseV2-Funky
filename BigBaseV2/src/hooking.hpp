@@ -53,5 +53,5 @@ namespace big
 		std::unique_ptr<vmt_hook> m_main_persistent_hook;
 	};
 
-	inline hooking *g_hooking{};
+	inline std::unique_ptr<hooking> g_hooking{};
 }

@@ -38,7 +38,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			auto fiber_pool_instance = std::make_unique<fiber_pool>(1);
 			//LOG_INFO("Fiber pool initialized.");
 
-			auto hooking_instance = std::make_unique<hooking>();
+			g_hooking = std::make_unique<hooking>();
 			//LOG_INFO("Hooking initialized.");
 
 			g_script_mgr.add_script(std::make_unique<script>(&features::script_func));
@@ -56,7 +56,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 				{
 					g_running = false;
 				}
-				//g_hooking->ensure_dynamic_hooks();
+				g_hooking->ensure_dynamic_hooks();
 				std::this_thread::yield();
 			}
 
@@ -68,7 +68,7 @@ BOOL APIENTRY DllMain(HMODULE hmod, DWORD reason, PVOID)
 			g_script_mgr.remove_all_scripts();
 			//LOG_INFO("Scripts unregistered.");
 
-			hooking_instance.reset();
+			g_hooking.reset();
 			//LOG_INFO("Hooking uninitialized.");
 
 			fiber_pool_instance.reset();

@@ -7,8 +7,7 @@ namespace big
 {
 	static void script_exception_handler(PEXCEPTION_POINTERS exp)
 	{
-		LOG_ERROR("Script threw an exception!");
-		g_stackwalker.ShowCallstack(GetCurrentThread(), exp->ContextRecord);
+		g_Logger->Info("Script threw exception! [BAD CODE]");
 	}
 
 	script::script(func_t func, std::optional<std::size_t> stack_size) :
@@ -70,20 +69,20 @@ namespace big
 				catch (std::exception const &ex)
 				{
 					auto ex_class = typeid(ex).name() + 6;
-					LOG_INFO("Script threw an C++ expection! {}: {}", ex_class, ex.what());
+					//LOG_INFO("Script threw an C++ expection! {}: {}", ex_class, ex.what());
 				}
 				catch (...)
 				{
-					LOG_INFO("Script threw a C++ exception!");
+					//LOG_INFO("Script threw a C++ exception!");
 				}
 			}();
 		}
 		__except (script_exception_handler(GetExceptionInformation()), EXCEPTION_EXECUTE_HANDLER)
 		{
-			LOG_INFO("Script threw an exception!");
+			//LOG_INFO("Script threw an exception!");
 		}
 
-		LOG_INFO("Script finished!");
+		//LOG_INFO("Script finished!");
 		while (true)
 		{
 			yield();

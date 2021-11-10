@@ -18,6 +18,10 @@ namespace big
 	void script_mgr::remove_all_scripts()
 	{
 		std::lock_guard lock(m_mutex);
+		for (auto& script : m_scripts)
+		{
+			script.reset();
+		}
 		m_scripts.clear();
 	}
 

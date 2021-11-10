@@ -30,9 +30,11 @@ namespace big
 
 	void native_invoker::end_call(rage::scrNativeHash hash)
 	{
-		if (auto it = m_handler_cache.find(hash); it != m_handler_cache.end())
+		if(auto it = m_handler_cache[hash])
 		{
-			rage::scrNativeHandler handler = it->second;
+
+
+			rage::scrNativeHandler handler = it;
 
 			__try
 			{
@@ -41,12 +43,27 @@ namespace big
 			}
 			__except (EXCEPTION_EXECUTE_HANDLER)
 			{
-				LOG_ERROR("Exception caught while trying to call 0x{:X} native.", hash);
+				g_Logger->Info("Native Handler had a exception");
 			}
 		}
-		else
+	}
+
+	void native_invoker::set_model_check(bool tog)
+	{
+		__try
 		{
-			LOG_ERROR("Failed to find 0x{:X} native's handler.", hash);
+			if (tog == true)
+			{
+				*(unsigned short*)g_pointers->m_model_bypass = 0x9090;
+			}
+			else
+			{
+				*(unsigned short*)g_pointers->m_model_bypass = 0x0574;
+			}
+		}
+		__except (EXCEPTION_EXECUTE_HANDLER)
+		{
+			//LOG_INFO("Model Bypass [NULL]");
 		}
 	}
 }

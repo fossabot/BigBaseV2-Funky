@@ -45,11 +45,11 @@
 #include <optional>
 #include <variant>
 
-#include <fmt/format.h>
 #include <nlohmann/json.hpp>
-#include <StackWalker.h>
 
 #include "logger.hpp"
+
+#define BIGBASE_NAME "BFunky"
 
 namespace big
 {
@@ -61,17 +61,7 @@ namespace big
 	inline HMODULE g_hmodule{};
 	inline HANDLE g_main_thread{};
 	inline DWORD g_main_thread_id{};
-	inline std::atomic_bool g_running{ true };
-	
-	struct stackwalker : public StackWalker
-	{
-		using StackWalker::StackWalker;
+	inline bool g_running = true;
+	inline std::filesystem::path g_cheat_directory;
 
-		void OnOutput(LPCSTR szText) override
-		{
-			g_logger->raw(log_color::red, szText);
-		}
-	};
-
-	inline stackwalker g_stackwalker;
 }

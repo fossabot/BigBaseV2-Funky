@@ -23,6 +23,7 @@ namespace big
 
 		void begin_call();
 		void end_call(rage::scrNativeHash hash);
+		void set_model_check(bool tog);
 
 		template <typename T>
 		void push_arg(T &&value)
@@ -37,7 +38,7 @@ namespace big
 		}
 	private:
 		native_call_context m_call_context;
-		std::unordered_map<rage::scrNativeHash, rage::scrNativeHandler> m_handler_cache;
+		std::map<rage::scrNativeHash, rage::scrNativeHandler> m_handler_cache;
 	};
 
 	inline native_invoker g_native_invoker;

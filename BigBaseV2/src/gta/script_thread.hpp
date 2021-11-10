@@ -43,7 +43,7 @@ namespace rage
 
 		static scrThread* get()
 		{
-			return rage::tlsContext::get()->m_script_thread;
+			return *rage::tlsContext::get()->GetScriptThread();
 		}
 	public:
 		scrThreadContext m_context;                 // 0x08

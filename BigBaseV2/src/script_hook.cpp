@@ -58,7 +58,7 @@ namespace big
 			if (program->is_valid())
 			{
 				hook_instance(program);
-				LOG_INFO("Hooked {} script ({})", program->m_name, static_cast<void*>(program));
+				//LOG_INFO("Hooked {} script ({})", program->m_name, static_cast<void*>(program));
 			}
 		}
 	}

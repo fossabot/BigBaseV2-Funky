@@ -6,7 +6,6 @@
 #include "gta/script_thread.hpp"
 #include "gui.hpp"
 #include "hooking.hpp"
-#include "memory/module.hpp"
 #include "natives.hpp"
 #include "pointers.hpp"
 #include "renderer.hpp"
@@ -34,10 +33,10 @@ namespace big
 
 	hooking::hooking() :
 		m_swapchain_hook(*g_pointers->m_swapchain, hooks::swapchain_num_funcs),
-		m_set_cursor_pos_hook("SetCursorPos", memory::module("user32.dll").get_export("SetCursorPos").as<void*>(), &hooks::set_cursor_pos),
+		m_set_cursor_pos_hook("SetCursorPos", GetProcAddress(GetModuleHandleA("user32.dll"), "SetCursorPos"), &hooks::set_cursor_pos),
 
 		m_run_script_threads_hook("Script hook", g_pointers->m_run_script_threads, &hooks::run_script_threads),
-		m_convert_thread_to_fiber_hook("ConvertThreadToFiber", memory::module("kernel32.dll").get_export("ConvertThreadToFiber").as<void*>(), &hooks::convert_thread_to_fiber)
+		m_convert_thread_to_fiber_hook("ConvertThreadToFiber", GetProcAddress(GetModuleHandleA("kernel32.dll"), "ConvertThreadToFiber"), &hooks::convert_thread_to_fiber)
 
 	{
 		m_swapchain_hook.hook(hooks::swapchain_present_index, &hooks::swapchain_present);
@@ -58,12 +57,10 @@ namespace big
 	{
 		m_swapchain_hook.enable();
 		m_og_wndproc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&hooks::wndproc)));
-		m_set_cursor_pos_hook.enable();
-
-		m_run_script_threads_hook.enable();
-		m_convert_thread_to_fiber_hook.enable();
 
 		ensure_dynamic_hooks();
+
+		MH_EnableHook(MH_ALL_HOOKS);
 		m_enabled = true;
 	}
 
@@ -75,27 +72,16 @@ namespace big
 		{
 			m_main_persistent_hook->disable();
 		}
-
-		m_convert_thread_to_fiber_hook.disable();
-		m_run_script_threads_hook.disable();
-
-		m_set_cursor_pos_hook.disable();
 		SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(m_og_wndproc));
 		m_swapchain_hook.disable();
+
+		MH_DisableHook(MH_ALL_HOOKS);
+		MH_RemoveHook(MH_ALL_HOOKS);
 	}
 
 	void hooking::ensure_dynamic_hooks()
 	{
-		if (!m_main_persistent_hook)
-		{
-			if (auto main_persistent = find_script_thread(RAGE_JOAAT("main_persistent")))
-			{
-				m_main_persistent_hook = std::make_unique<vmt_hook>(main_persistent->m_handler, hooks::main_persistent_num_funcs);
-				m_main_persistent_hook->hook(hooks::main_persistent_dtor_index, &hooks::main_persistent_dtor);
-				m_main_persistent_hook->hook(hooks::main_persistent_is_networked_index, &hooks::main_persistent_is_networked);
-				m_main_persistent_hook->enable();
-			}
-		}
+		
 	}
 
 	minhook_keepalive::minhook_keepalive()
@@ -179,16 +165,4 @@ namespace big
 		return g_hooking->m_set_cursor_pos_hook.get_original<decltype(&set_cursor_pos)>()(x, y);
 	}
 
-	void hooks::main_persistent_dtor(CGameScriptHandler *this_, bool free_memory)
-	{
-		auto og_func = g_hooking->m_main_persistent_hook->get_original<decltype(&main_persistent_dtor)>(main_persistent_dtor_index);
-		g_hooking->m_main_persistent_hook->disable();
-		g_hooking->m_main_persistent_hook.reset();
-		return og_func(this_, free_memory);
-	}
-
-	bool hooks::main_persistent_is_networked(CGameScriptHandler *this_)
-	{
-		return *g_pointers->m_is_session_started;
-	}
 }

@@ -41,15 +41,15 @@ namespace big::gta_util
 			if (!thread || !thread->m_context.m_thread_id || thread->m_context.m_script_hash != script_hash)
 				continue;
 
-			auto og_thread = tls_ctx->m_script_thread;
+			auto og_thread = *tls_ctx->GetScriptThread();
 
-			tls_ctx->m_script_thread = thread;
-			tls_ctx->m_is_script_thread_active = true;
+			*tls_ctx->GetScriptThread() = thread;
+			*tls_ctx->IsScriptThreadActive() = true;
 
 			std::invoke(std::forward<F>(callback), std::forward<Args>(args)...);
 
-			tls_ctx->m_script_thread = og_thread;
-			tls_ctx->m_is_script_thread_active = og_thread != nullptr;
+			*tls_ctx->GetScriptThread() = og_thread;
+			*tls_ctx->IsScriptThreadActive() = og_thread != nullptr;
 
 			return;
 		}

@@ -7,6 +7,8 @@ void big::JavaScriptTesting::BeginContext()
 	this->chakra.jsResult = (char*)calloc(1, this->GetOutputSize());
 	this->chakra.js_state = js_newstate(NULL, NULL, JS_STRICT);
 
+	js_newcfunction(this->chakra.js_state, JavaScript_Functions::Logging, "logger.info", 1);
+	js_setglobal(this->chakra.js_state, "hello");
 
 	g_Logger->Info("Allocated JavaScript Runtime");
 }
@@ -18,15 +20,18 @@ void big::JavaScriptTesting::CopyInput(char* _input)
 
 	size_t strLen = strlen(_input);
 
-	this->input = (wchar_t*)malloc((strLen + 1) * sizeof(wchar_t));
-	memset(this->input, 0, (strLen + 2) * sizeof(wchar_t));
+	this->input = (char*)malloc((strLen + 1) * sizeof(char));
+	memset(this->input, 0, (strLen + 1) * sizeof(char));
 
-	mbstowcs(this->input, _input, strLen + 1);
+	memcpy(this->input, _input, strLen + 1);
 }
 
 void big::JavaScriptTesting::RunScript()
 {
-	
+	//https://mujs.com/examples.html
+
+	js_dostring(this->chakra.js_state, this->input);
+
 }
 
 void big::JavaScriptTesting::EndContext()

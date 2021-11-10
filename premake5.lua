@@ -155,7 +155,8 @@ workspace "BigBaseV2"
     links
     {
       "MinHook",
-      "ImGui"
+      "ImGui",
+      "mujs"
     }
 
     pchheader "%{PrecompiledHeaderInclude}"

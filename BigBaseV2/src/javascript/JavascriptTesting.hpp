@@ -31,7 +31,7 @@ namespace big
 
 	private:
 		
-		wchar_t *input = nullptr;
+		char *input = nullptr;
 	};
 
 	inline std::unique_ptr<JavaScriptTesting> g_JavascriptTest;

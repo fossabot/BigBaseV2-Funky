@@ -44,13 +44,13 @@ void big::JavaScriptTesting::EndContext()
 
 void big::JavaScriptTesting::AddToLog(char* msg)
 {
+	// the most cursed thing i have ever written
 	size_t tt = strlen(msg);
 	size_t zt = strlen(jsResult);
 
 	if (zt == 0)
 	{
 		memcpy(jsResult, msg, tt);
-		*(jsResult + tt + 1) = '\00';
 		return;
 	}
 

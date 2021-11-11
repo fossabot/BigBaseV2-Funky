@@ -54,4 +54,4 @@ static int js_ptry(js_State *J) {
 
 
 # What now?
-### **And please for the sake build into release mode!**
+### **And please for the sake build in release mode!**

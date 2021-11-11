@@ -25,6 +25,8 @@ namespace big
 
 		void EndContext();
 
+		void AddToLog(char* msg);
+
 	private:
 		
 		char *input = nullptr;

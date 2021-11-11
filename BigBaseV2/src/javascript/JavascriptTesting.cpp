@@ -42,11 +42,29 @@ void big::JavaScriptTesting::EndContext()
 	js_freestate(this->js_state);
 }
 
+void big::JavaScriptTesting::AddToLog(char* msg)
+{
+	size_t tt = strlen(msg);
+	size_t zt = strlen(jsResult);
+
+	if (zt == 0)
+	{
+		memcpy(jsResult, msg, tt);
+		*(jsResult + tt + 1) = '\00';
+		return;
+	}
+
+	jsResult[zt] = '\n';
+	memcpy(jsResult + zt + 1, msg, tt);
+	
+}
+
 void big::JavaScript_Functions::Logging(js_State* state)
 {
 	const char* msg = js_tostring(state, 1);
 
 	g_Logger->Info("[MUJS] %s",  msg);
+	g_JavascriptTest->AddToLog((char*)msg);
 
 	js_pushundefined(state);
 }

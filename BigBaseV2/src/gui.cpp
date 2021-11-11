@@ -142,15 +142,16 @@ namespace big
 				ImGui::InputTextMultiline("##input_js", input, sizeof(input), ImVec2(-1, 250));
 				if (ImGui::Button("Run Script"))
 				{
-					g_JavascriptTest->BeginContext();
-					g_JavascriptTest->CopyInput(input);
-					g_JavascriptTest->RunScript();
+					g_JavascriptTest->BeginContext(); // ALLOCATION
+					g_JavascriptTest->CopyInput(input); // COPY INPUT
+					g_JavascriptTest->RunScript(); // RIM
 
-					//strcpy_s(output, g_JavascriptTest->GetOutput());
-					memset(output, 0, sizeof(output));
-					memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
+					{ // COPY RESULT
+						memset(output, 0, sizeof(output));
+						memcpy(output, g_JavascriptTest->GetOutput(), g_JavascriptTest->GetOutputSize());
+					}
 
-					g_JavascriptTest->EndContext();
+					g_JavascriptTest->EndContext(); // DEALLOCATING
 				}
 
 				ImGui::EndTabItem();

@@ -1,4 +1,6 @@
 # BigBaseV2 but funky
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FPatchByte%2FBigBaseV2-Funky.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FPatchByte%2FBigBaseV2-Funky?ref=badge_shield)
+
 A mod menu base for Grand Theft Auto V.
 Strictly for educational purposes.
 
@@ -55,3 +57,6 @@ static int js_ptry(js_State *J) {
 
 # What now?
 ### **And please for the sake build in release mode!**
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FPatchByte%2FBigBaseV2-Funky.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FPatchByte%2FBigBaseV2-Funky?ref=badge_large)
